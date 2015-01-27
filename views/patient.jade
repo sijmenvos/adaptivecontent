@@ -35,10 +35,30 @@ md-content
       md-card
         md-card-content
           h2 Uw instellingen
-          md-input-container
-            label Wenst u bezoek?
-            input(type="checkbox" ng-model="wensbezoek")
+          img(src="./images/facebook.png", style="max-height: 50px;width:auto")
+        md-card-content  
+          label(for="bez") Ja ik wens bezoek: 
+          input#bez(type="checkbox" ng-model="wensbezoek")
     #tab3-content(role='tabpanel', aria-labelledby='tab3', ng-switch-when='1', md-swipe-left='next()', md-swipe-right='previous()')
+      md-card
+        md-card-content
+          label Sortering 
+          select(placeholder="sortering")
+            option Tijd (nieuwste eerst)
+            option Tijd (oudste eerst)
+            option Type behandeling
+            option Dokter/verpleger
+            option Locatie
+          div.pull-right
+            label Filter 
+            select(placeholder="filter")
+              optgroup(label="Dokter/verpleger")
+                option(ng-repeat="item in friends | limitTo:2 ") {{item.name}}
+              optgroup(label="Type behandeling")
+                option Intake
+                option Behandeling
+                option Chirurgie
+                option Medicijnen
       md-card
         md-card-content
           md-item-content

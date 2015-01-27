@@ -392,3 +392,7 @@ img.icon {
 	width: 30px;
 	height:30px;
 }
+
+.pull-right {
+	float: right;
+}
