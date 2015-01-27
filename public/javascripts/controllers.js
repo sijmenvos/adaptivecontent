@@ -150,13 +150,21 @@ angular.module('lego')
               center: 'prev today next',
               right: ''
             },
+            minTime: '08:00:00',
+            maxTime: '20:00:00',
             defaultView: 'agendaDay',
             eventClick: function( date, jsEvent, view){
                 console.log(date);
                 if(date.title.indexOf('Bezoekslot' != -1)){
-                    if(date.color != 'red'){
-                        date.color="red";
-                        date.title = "Bezoekslot (u wenst geen bezoek)";
+                    if(!date.color){
+                        if($state.current.name == 'bezoeker'){
+                            date.title = "Bezoekslot ingepland";
+                            date.color ="green";
+                        }
+                        else{
+                            date.title = "Bezoekslot (u wenst geen bezoek)";
+                            date.color="red";
+                        }
                     } else {
                         delete date.color; 
                         date.title = "Bezoekslot";
