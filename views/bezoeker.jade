@@ -1,0 +1,86 @@
+md-content
+  md-tabs.md-accent.nav(md-selected='data.selectedIndex')
+    md-tab#tab1(aria-controls='tab1-content') Overzicht
+    md-tab#tab2(aria-controls='tab2-content') Bezoeken
+    md-tab#tab3(aria-controls='tab3-content') Route
+  ng-switch.tabpanel-container.main(on='data.selectedIndex' flex layout="column" layout-fill)
+    #tab1-content(role='tabpanel', aria-labelledby='tab1', ng-switch-when='0', md-swipe-left='next()', md-swipe-right='previous()', flex layout-align="center center")
+      div(ng-if="!upcoming || upcoming.length == 0", flex layout="column")
+        md-card(flex)
+          md-card-content
+            h2(ng-hide="showAfspraken", ng-click="showAfspraken = !showAfspraken").text-center Geen activiteiten gepland.
+            h2.text-center(ng-show="showAfspraken") Vandaag
+            div(ng-show="showAfspraken", ui-calendar="uiConfig.calendar", ng-model="afspraken")
+        md-card(flex)
+          md-card-content
+            h2.text-center Bezoek een vriend
+            md-list
+              md-item(ng-repeat="item in friends")
+                md-item-content.smaller
+                  .md-tile-left
+                    img.face(ng-src="{{item.face}}" alt="{{item.name}}")
+                  .md-tile-content
+                    h3 {{item.name}}
+                    h4 {{item.what}}
+                    p In het ziekenhuis tot: {{item.until}}
+    #tab2-content(role='tabpanel', aria-labelledby='tab2', ng-switch-when='1', md-swipe-left='next()', md-swipe-right='previous()')
+      md-card(flex ng-show="maken")
+        md-card-content
+          h2.text-center {{friends[0].name}} bezoeken
+          md-item(ng-repeat="item in friends | limitTo:1" flex)
+            md-item-content.smaller(fex)
+              .md-tile-left
+                img.face(ng-src="{{item.face}}" alt="{{item.name}}")
+              .md-tile-content
+                h3 {{item.name}}
+                h4 {{item.what}}
+                p In het ziekenhuis tot: {{item.until}}
+          md-content
+            h3 Kies een slot
+            div(ui-calendar="uiConfig.calendar", ng-model="uren")
+      md-card(flex, ng-hide="maken", ng-click="maken=true")
+        md-card-content
+          h2.text-center Bezoek een vriend
+          md-list
+            md-item(ng-repeat="item in friends" flex)
+              md-item-content.smaller(fex)
+                .md-tile-left
+                  img.face(ng-src="{{item.face}}" alt="{{item.name}}")
+                .md-tile-content
+                  h3 {{item.name}}
+                  h4 {{item.what}}
+                  p In het ziekenhuis tot: {{item.until}}
+    #tab3-content(role='tabpanel', aria-labelledby='tab3', ng-switch-when='2', md-swipe-left='next()', md-swipe-right='previous()')
+      div(ng-hide="binnen")
+        md-card
+          md-card-content
+            md-item-content
+              .md-tile-left
+                img.icon(src="./images/fiets.png")
+              .md-tile-content
+                h3 Fiets: 45 minuten
+        md-card
+          md-card-content
+            md-item-content
+              .md-tile-left
+                img.icon(src="./images/bus.png")
+              .md-tile-content
+                h3 Openbaar vervoer: 30 minuten
+                p 2x overstappen, 5 minuten lopen
+        md-card
+          md-card-content
+            md-item-content
+              .md-tile-left
+                img.icon(src="./images/auto.png")
+              .md-tile-content
+                h3 Auto: 17 minuten
+                p (18 minuten met verkeer)
+        md-card
+          md-card-content
+            h3 Locatie
+            img(src="./images/kaart.png" width="100%", ng-click="binnen = true")
+      div(ng-show="binnen")
+        md-card
+          md-card-content
+            h3 Route naar Kaakchirurgie
+            .blaat

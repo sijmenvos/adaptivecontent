@@ -1,0 +1,59 @@
+md-content
+  md-tabs.md-accent.nav(md-selected='data.selectedIndex')
+    md-tab#tab1(aria-controls='tab1-content') Agenda
+    md-tab#tab2(aria-controls='tab2-content') Dossier
+    md-tab#tab3(aria-controls='tab3-content') Gegevens
+  ng-switch.tabpanel-container.main(on='data.selectedIndex' flex layout="column" layout-fill)
+    #tab1-content(role='tabpanel', aria-labelledby='tab1', ng-switch-when='0', md-swipe-left='next()', md-swipe-right='previous()', flex layout-align="center center")
+      div(ng-if="!upcoming || upcoming.length == 0", flex layout="column")
+        md-card
+          md-card-content.text-center
+            md-button Roep verpleging
+        md-card(flex)
+          md-card-content
+            div(ui-calendar="uiConfig.calendar", ng-model="patient")
+        //- md-card(flex)
+          md-card-content
+            h2.text-center Aankomende bezoeken
+            md-list
+              md-item(ng-repeat="item in friends | limitTo:4")
+                md-item-content.smaller
+                  .md-tile-left
+                    img.face(ng-src="{{item.face}}" alt="{{item.name}}")
+                  .md-tile-content
+                    h3 {{item.name}}
+                    p {{item.until}} 12:00
+    #tab2-content(role='tabpanel', aria-labelledby='tab2', ng-switch-when='2', md-swipe-left='next()', md-swipe-right='previous()')
+      md-card
+        md-card-content
+          h2 Uw Gegevens
+            md-item-content.smaller
+              .md-tile-left
+                img.face(ng-src="{{friends[12].face}}" alt="{{friends[12].name}}")
+              .md-tile-content
+                h3 {{friends[12].name}}
+      md-card
+        md-card-content
+          h2 Uw instellingen
+          md-input-container
+            label Wenst u bezoek?
+            input(type="checkbox" ng-model="wensbezoek")
+    #tab3-content(role='tabpanel', aria-labelledby='tab3', ng-switch-when='1', md-swipe-left='next()', md-swipe-right='previous()')
+      md-card
+        md-card-content
+          md-item-content
+            .md-tile-left
+              img.face(ng-src="{{friends[19].face}}")
+            .md-tile-content
+              h3 Diagnose
+              p Dokter {{friends[19].name}} heeft de volgende diagnose vastgesteld:
+              p Uw amandelen moeten worden verwijdert. Er wordt een behandeling voor u ingeroosterd.
+      md-card
+        md-card-content
+          md-item-content
+            .md-tile-left
+              img.face(ng-src="{{friends[13].face}}")
+            .md-tile-content
+              h3 Diagnose
+              p Verpleger {{friends[13].name}} heeft de volgende handeling gedaan:
+              p U bent opgenomen in kamer 02A34-3.
